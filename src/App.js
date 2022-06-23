@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './component/Navbar';
+import Lowernavbar from './component/Lowernavbar';  
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from './component/Home';
+import Shirt from './component/Shirt';
+import Pant from './component/Pant'
+import { useState } from 'react';
 
 function App() {
+  const [cart, setCart]=useState([]);
+   function addToCart(product){
+    console.log(product)
+    const productInCart=cart.find(ele=>{
+      return ele.id===product.id;
+    })
+    if(productInCart){
+      if(productInCart.quant < productInCart.quantity){
+        const newCart=cart.map(ele=>{
+          return ele.id===product.id?{...productInCart, quantity:ele.quantity+1}:ele;
+        })
+        setCart(newCart);
+      }
+    }
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div>
+      <BrowserRouter>
+      <Navbar cart={cart}/>
+      <Lowernavbar/>
+    <Routes>
+      <Route path='/' element={<Home addToCart={addToCart}/>}/>
+      <Route path='/home' element={<Home/>}/>
+      <Route path='/shirt' element={<Shirt/>}/>
+      <Route path='/pant' element={<Pant/>}/>
+
+    </Routes>
+    </BrowserRouter>
+   </div>
   );
 }
 
