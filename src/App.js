@@ -10,18 +10,23 @@ import { useState } from 'react';
 function App() {
   const [cart, setCart]=useState([]);
    function addToCart(product){
-    console.log(product)
+    console.log(product);
     const productInCart=cart.find(ele=>{
       return ele.id===product.id;
     })
+   
     if(productInCart){
       if(productInCart.quant < productInCart.quantity){
         const newCart=cart.map(ele=>{
-          return ele.id===product.id?{...productInCart, quantity:ele.quantity+1}:ele;
+          return ele.id===product.id?{...productInCart, quantity:productInCart.quantity+1}:ele;
         })
         setCart(newCart);
       }
     }
+    else{
+      setCart([...cart, { ...product, quantity: 1 }])
+    }
+    console.log(cart.length);
   }
   
   return (

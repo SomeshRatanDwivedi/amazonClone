@@ -19,7 +19,7 @@ export default function Home({addToCart}) {
                                     <span className="offer" >{ele.offer}</span>
 
                                 </p>
-                                <button className="add_to_cart" onClick={()=>addToCart.addToCart(ele)}>Add to cart</button>
+                                <button className="add_to_cart" onClick={()=>addToCart(ele)}>Add to cart</button>
                             </div>
 
                         </div>
